@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4b1a1006def54a0bb6814cb1813233a2" Name="Diagram1" >
+        <EntityTypeShape EntityType="Model.StockType" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="Model.Train" Width="1.5" PointX="6" PointY="0.5" />
+        <EntityTypeShape EntityType="Model.StockOnTrain" Width="1.5" PointX="8.5" PointY="3.375" />
+        <EntityTypeShape EntityType="Model.Locomotive" Width="1.5" PointX="2.5" PointY="2.75" />
+        <EntityTypeShape EntityType="Model.FreightWagon" Width="1.5" PointX="0.5" PointY="2.75" />
+        <InheritanceConnector EntityType="Model.FreightWagon" />
+        <InheritanceConnector EntityType="Model.Locomotive" />
+        <EntityTypeShape EntityType="Model.Town" Width="1.5" PointX="8.75" PointY="0.5" />
+        <EntityTypeShape EntityType="Model.Stock" Width="1.5" PointX="2.5" PointY="0.5" />
+        <InheritanceConnector EntityType="Model.Locomotive" />
+        <InheritanceConnector EntityType="Model.FreightWagon" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
