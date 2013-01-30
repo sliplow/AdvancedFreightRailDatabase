@@ -14,5 +14,6 @@ namespace AdvancedFreightRailDatabase
     
     public partial class Locomotive : RollingStock
     {
+        public int TowingWeight { get; set; }
     }
 }

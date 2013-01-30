@@ -20,7 +20,9 @@ namespace AdvancedFreightRailDatabase
         }
     
         public int RollingStockId { get; set; }
+        public string Class { get; set; }
         public int NumberOwned { get; set; }
+        public decimal Length { get; set; }
     
         public virtual ICollection<Stock> Stocks { get; set; }
     }

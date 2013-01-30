@@ -28,8 +28,10 @@
             <PropertyRef Name="RollingStockId" />
           </Key>
           <Property Type="Int32" Name="RollingStockId" Nullable="false" />
+          <Property Type="String" Name="Class" Nullable="false" />
           <Property Type="Int32" Name="NumberOwned" Nullable="false" />
           <NavigationProperty Name="Stocks" Relationship="Model.RollingStockStock" FromRole="RollingStock" ToRole="Stock" />
+          <Property Type="Decimal" Name="Length" Nullable="false" />
         </EntityType>
         <EntityType Name="Train">
           <Key>
@@ -44,9 +46,11 @@
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="Locomotive" BaseType="Model.RollingStock">
-          </EntityType>
+          <Property Type="Int32" Name="TowingWeight" Nullable="false" />
+        </EntityType>
         <EntityType Name="FreightWagon" BaseType="Model.RollingStock">
-          </EntityType>
+          <Property Type="Decimal" Name="TareWeight" Nullable="false" />
+        </EntityType>
         <EntityType Name="Town">
           <Key>
             <PropertyRef Name="Id" />

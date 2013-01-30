@@ -14,5 +14,6 @@ namespace AdvancedFreightRailDatabase
     
     public partial class FreightWagon : RollingStock
     {
+        public decimal TareWeight { get; set; }
     }
 }
