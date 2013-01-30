@@ -13,73 +13,152 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="RollingStocks" EntityType="Model.RollingStock" />
+          <EntitySet Name="StockTypes" EntityType="Model.StockType" />
           <EntitySet Name="Trains" EntityType="Model.Train" />
           <EntitySet Name="StockOnTrains" EntityType="Model.StockOnTrain" />
           <EntitySet Name="Towns" EntityType="Model.Town" />
-          <EntitySet Name="Stocks" EntityType="Model.Stock" />
-          <AssociationSet Name="RollingStockStock" Association="Model.RollingStockStock">
+          <EntitySet Name="RollingStocks" EntityType="Model.RollingStock" />
+          <AssociationSet Name="TownTrain" Association="Model.TownTrain">
+            <End Role="Town" EntitySet="Towns" />
+            <End Role="Train" EntitySet="Trains" />
+          </AssociationSet>
+          <AssociationSet Name="TownTrain1" Association="Model.TownTrain1">
+            <End Role="Town" EntitySet="Towns" />
+            <End Role="Train" EntitySet="Trains" />
+          </AssociationSet>
+          <AssociationSet Name="TrainStockOnTrain" Association="Model.TrainStockOnTrain">
+            <End Role="Train" EntitySet="Trains" />
+            <End Role="StockOnTrain" EntitySet="StockOnTrains" />
+          </AssociationSet>
+          <AssociationSet Name="StockTypeRollingStock" Association="Model.StockTypeRollingStock">
+            <End Role="StockType" EntitySet="StockTypes" />
             <End Role="RollingStock" EntitySet="RollingStocks" />
-            <End Role="Stock" EntitySet="Stocks" />
+          </AssociationSet>
+          <AssociationSet Name="StockOnTrainRollingStock" Association="Model.StockOnTrainRollingStock">
+            <End Role="StockOnTrain" EntitySet="StockOnTrains" />
+            <End Role="RollingStock" EntitySet="RollingStocks" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="RollingStock">
+        <EntityType Name="StockType">
           <Key>
-            <PropertyRef Name="RollingStockId" />
+            <PropertyRef Name="StockTypeId" />
           </Key>
-          <Property Type="Int32" Name="RollingStockId" Nullable="false" />
+          <Property Type="Int32" Name="StockTypeId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Class" Nullable="false" />
           <Property Type="Int32" Name="NumberOwned" Nullable="false" />
-          <NavigationProperty Name="Stocks" Relationship="Model.RollingStockStock" FromRole="RollingStock" ToRole="Stock" />
           <Property Type="Decimal" Name="Length" Nullable="false" />
+          <NavigationProperty Name="RollingStocks" Relationship="Model.StockTypeRollingStock" FromRole="StockType" ToRole="RollingStock" />
         </EntityType>
         <EntityType Name="Train">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="TrainId" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TrainId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CollectionFrom" Nullable="false" />
+          <Property Type="Int32" Name="DeliveryTo" Nullable="false" />
+          <NavigationProperty Name="Town" Relationship="Model.TownTrain" FromRole="Train" ToRole="Town" />
+          <NavigationProperty Name="Town1" Relationship="Model.TownTrain1" FromRole="Train" ToRole="Town" />
+          <NavigationProperty Name="StockOnTrains" Relationship="Model.TrainStockOnTrain" FromRole="Train" ToRole="StockOnTrain" />
         </EntityType>
         <EntityType Name="StockOnTrain">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="SerialNumber" />
+            <PropertyRef Name="TrainId" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SerialNumber" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="TrainId" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Train" Relationship="Model.TrainStockOnTrain" FromRole="StockOnTrain" ToRole="Train" />
+          <NavigationProperty Name="RollingStocks" Relationship="Model.StockOnTrainRollingStock" FromRole="StockOnTrain" ToRole="RollingStock" />
         </EntityType>
-        <EntityType Name="Locomotive" BaseType="Model.RollingStock">
+        <EntityType Name="Locomotive" BaseType="Model.StockType">
           <Property Type="Int32" Name="TowingWeight" Nullable="false" />
         </EntityType>
-        <EntityType Name="FreightWagon" BaseType="Model.RollingStock">
+        <EntityType Name="FreightWagon" BaseType="Model.StockType">
           <Property Type="Decimal" Name="TareWeight" Nullable="false" />
+          <Property Type="String" Name="Description" Nullable="false" />
+          <Property Type="Decimal" Name="MaxPayload" Nullable="false" />
         </EntityType>
         <EntityType Name="Town">
           <Key>
-            <PropertyRef Name="Id" />
+            <PropertyRef Name="TownId" />
           </Key>
-          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TownId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <NavigationProperty Name="Trains" Relationship="Model.TownTrain" FromRole="Town" ToRole="Train" />
+          <NavigationProperty Name="Trains1" Relationship="Model.TownTrain1" FromRole="Town" ToRole="Train" />
         </EntityType>
-        <EntityType Name="Stock">
+        <EntityType Name="RollingStock">
           <Key>
             <PropertyRef Name="SerialNumber" />
           </Key>
-          <Property Type="Int32" Name="SerialNumber" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="RollingStockId" Nullable="false" />
-          <NavigationProperty Name="RollingStock" Relationship="Model.RollingStockStock" FromRole="Stock" ToRole="RollingStock" />
+          <Property Type="Int32" Name="SerialNumber" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="StockTypeId" Nullable="false" />
+          <NavigationProperty Name="StockType" Relationship="Model.StockTypeRollingStock" FromRole="RollingStock" ToRole="StockType" />
+          <NavigationProperty Name="StockOnTrain" Relationship="Model.StockOnTrainRollingStock" FromRole="RollingStock" ToRole="StockOnTrain" />
         </EntityType>
-        <Association Name="RollingStockStock">
-          <End Type="Model.RollingStock" Role="RollingStock" Multiplicity="1" />
-          <End Type="Model.Stock" Role="Stock" Multiplicity="*" />
+        <EntityType Name="LocomotiveStock" BaseType="Model.RollingStock">
+          <Property Type="String" Name="Name" Nullable="true" />
+        </EntityType>
+        <Association Name="TownTrain">
+          <End Type="Model.Town" Role="Town" Multiplicity="1" />
+          <End Type="Model.Train" Role="Train" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="RollingStock">
-              <PropertyRef Name="RollingStockId" />
+            <Principal Role="Town">
+              <PropertyRef Name="TownId" />
             </Principal>
-            <Dependent Role="Stock">
-              <PropertyRef Name="RollingStockId" />
+            <Dependent Role="Train">
+              <PropertyRef Name="CollectionFrom" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="LocomotiveStock" BaseType="Model.Stock">
-          <Property Type="String" Name="Name" Nullable="true" />
-        </EntityType>
+        <Association Name="TownTrain1">
+          <End Type="Model.Town" Role="Town" Multiplicity="1" />
+          <End Type="Model.Train" Role="Train" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Town">
+              <PropertyRef Name="TownId" />
+            </Principal>
+            <Dependent Role="Train">
+              <PropertyRef Name="DeliveryTo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TrainStockOnTrain">
+          <End Type="Model.Train" Role="Train" Multiplicity="1" />
+          <End Type="Model.StockOnTrain" Role="StockOnTrain" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="TrainId" />
+            </Principal>
+            <Dependent Role="StockOnTrain">
+              <PropertyRef Name="TrainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StockTypeRollingStock">
+          <End Type="Model.StockType" Role="StockType" Multiplicity="1" />
+          <End Type="Model.RollingStock" Role="RollingStock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockType">
+              <PropertyRef Name="StockTypeId" />
+            </Principal>
+            <Dependent Role="RollingStock">
+              <PropertyRef Name="StockTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StockOnTrainRollingStock">
+          <End Type="Model.StockOnTrain" Role="StockOnTrain" Multiplicity="*" />
+          <End Type="Model.RollingStock" Role="RollingStock" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="RollingStock">
+              <PropertyRef Name="SerialNumber" />
+            </Principal>
+            <Dependent Role="StockOnTrain">
+              <PropertyRef Name="SerialNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

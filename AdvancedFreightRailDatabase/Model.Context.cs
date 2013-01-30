@@ -25,10 +25,10 @@ namespace AdvancedFreightRailDatabase
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<RollingStock> RollingStocks { get; set; }
+        public DbSet<StockType> StockTypes { get; set; }
         public DbSet<Train> Trains { get; set; }
         public DbSet<StockOnTrain> StockOnTrains { get; set; }
         public DbSet<Town> Towns { get; set; }
-        public DbSet<Stock> Stocks { get; set; }
+        public DbSet<RollingStock> RollingStocks { get; set; }
     }
 }

@@ -16,14 +16,13 @@ namespace AdvancedFreightRailDatabase
     {
         public RollingStock()
         {
-            this.Stocks = new HashSet<Stock>();
+            this.StockOnTrain = new HashSet<StockOnTrain>();
         }
     
-        public int RollingStockId { get; set; }
-        public string Class { get; set; }
-        public int NumberOwned { get; set; }
-        public decimal Length { get; set; }
+        public int SerialNumber { get; set; }
+        public int StockTypeId { get; set; }
     
-        public virtual ICollection<Stock> Stocks { get; set; }
+        public virtual StockType StockType { get; set; }
+        public virtual ICollection<StockOnTrain> StockOnTrain { get; set; }
     }
 }

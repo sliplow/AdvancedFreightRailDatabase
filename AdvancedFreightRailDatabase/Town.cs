@@ -14,6 +14,16 @@ namespace AdvancedFreightRailDatabase
     
     public partial class Town
     {
-        public int Id { get; set; }
+        public Town()
+        {
+            this.Trains = new HashSet<Train>();
+            this.Trains1 = new HashSet<Train>();
+        }
+    
+        public int TownId { get; set; }
+        public string Name { get; set; }
+    
+        public virtual ICollection<Train> Trains { get; set; }
+        public virtual ICollection<Train> Trains1 { get; set; }
     }
 }

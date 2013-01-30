@@ -12,8 +12,10 @@ namespace AdvancedFreightRailDatabase
     using System;
     using System.Collections.Generic;
     
-    public partial class FreightWagon : RollingStock
+    public partial class FreightWagon : StockType
     {
         public decimal TareWeight { get; set; }
+        public string Description { get; set; }
+        public decimal MaxPayload { get; set; }
     }
 }
