@@ -12,7 +12,7 @@ namespace AdvancedFreightRailDatabase
     using System;
     using System.Collections.Generic;
     
-    public partial class Locomotive : StockType
+    public partial class Locomotive : RollingStock
     {
     }
 }

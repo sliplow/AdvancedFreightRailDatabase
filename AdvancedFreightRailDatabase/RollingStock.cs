@@ -12,7 +12,16 @@ namespace AdvancedFreightRailDatabase
     using System;
     using System.Collections.Generic;
     
-    public partial class FreightWagon : RollingStock
+    public partial class RollingStock
     {
+        public RollingStock()
+        {
+            this.Stocks = new HashSet<Stock>();
+        }
+    
+        public int RollingStockId { get; set; }
+        public int NumberOwned { get; set; }
+    
+        public virtual ICollection<Stock> Stocks { get; set; }
     }
 }

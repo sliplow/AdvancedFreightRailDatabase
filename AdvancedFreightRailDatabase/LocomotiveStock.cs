@@ -12,9 +12,8 @@ namespace AdvancedFreightRailDatabase
     using System;
     using System.Collections.Generic;
     
-    public partial class StockType
+    public partial class LocomotiveStock : Stock
     {
-        public int StockTypeId { get; set; }
-        public int NumberOwned { get; set; }
+        public string Name { get; set; }
     }
 }

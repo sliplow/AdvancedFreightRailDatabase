@@ -15,6 +15,8 @@ namespace AdvancedFreightRailDatabase
     public partial class Stock
     {
         public int SerialNumber { get; set; }
-        public string Name { get; set; }
+        public int RollingStockId { get; set; }
+    
+        public virtual RollingStock RollingStock { get; set; }
     }
 }
