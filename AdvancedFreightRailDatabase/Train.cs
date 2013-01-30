@@ -17,14 +17,21 @@ namespace AdvancedFreightRailDatabase
         public Train()
         {
             this.StockOnTrains = new HashSet<StockOnTrain>();
+            this.Goods = new HashSet<Goods>();
         }
     
         public int TrainId { get; set; }
         public int CollectionFrom { get; set; }
         public int DeliveryTo { get; set; }
+        public int Driver { get; set; }
+        public int CoDriver { get; set; }
+        public decimal GrossWeight { get; set; }
     
-        public virtual Town Town { get; set; }
-        public virtual Town Town1 { get; set; }
+        public virtual Town StartTown { get; set; }
+        public virtual Town EndTown { get; set; }
         public virtual ICollection<StockOnTrain> StockOnTrains { get; set; }
+        public virtual Driver MainDriver { get; set; }
+        public virtual Driver SecondaryDriver { get; set; }
+        public virtual ICollection<Goods> Goods { get; set; }
     }
 }

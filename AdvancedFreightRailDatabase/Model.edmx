@@ -38,6 +38,20 @@
             <End Role="StockOnTrain" EntitySet="StockOnTrains" />
             <End Role="RollingStock" EntitySet="RollingStocks" />
           </AssociationSet>
+          <EntitySet Name="Drivers" EntityType="Model.Driver" />
+          <AssociationSet Name="DriverTrain" Association="Model.DriverTrain">
+            <End Role="Driver" EntitySet="Drivers" />
+            <End Role="Train" EntitySet="Trains" />
+          </AssociationSet>
+          <AssociationSet Name="DriverTrain1" Association="Model.DriverTrain1">
+            <End Role="Driver" EntitySet="Drivers" />
+            <End Role="Train" EntitySet="Trains" />
+          </AssociationSet>
+          <EntitySet Name="Goods" EntityType="Model.Goods" />
+          <AssociationSet Name="TrainGoods" Association="Model.TrainGoods">
+            <End Role="Train" EntitySet="Trains" />
+            <End Role="Goods" EntitySet="Goods" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="StockType">
           <Key>
@@ -56,9 +70,15 @@
           <Property Type="Int32" Name="TrainId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="CollectionFrom" Nullable="false" />
           <Property Type="Int32" Name="DeliveryTo" Nullable="false" />
-          <NavigationProperty Name="Town" Relationship="Model.TownTrain" FromRole="Train" ToRole="Town" />
-          <NavigationProperty Name="Town1" Relationship="Model.TownTrain1" FromRole="Train" ToRole="Town" />
+          <NavigationProperty Name="StartTown" Relationship="Model.TownTrain" FromRole="Train" ToRole="Town" />
+          <NavigationProperty Name="EndTown" Relationship="Model.TownTrain1" FromRole="Train" ToRole="Town" />
           <NavigationProperty Name="StockOnTrains" Relationship="Model.TrainStockOnTrain" FromRole="Train" ToRole="StockOnTrain" />
+          <Property Type="Int32" Name="Driver" Nullable="false" />
+          <Property Type="Int32" Name="CoDriver" Nullable="false" />
+          <NavigationProperty Name="MainDriver" Relationship="Model.DriverTrain" FromRole="Train" ToRole="Driver" />
+          <NavigationProperty Name="SecondaryDriver" Relationship="Model.DriverTrain1" FromRole="Train" ToRole="Driver" />
+          <NavigationProperty Name="Goods" Relationship="Model.TrainGoods" FromRole="Train" ToRole="Goods" />
+          <Property Type="Decimal" Name="GrossWeight" Nullable="false" />
         </EntityType>
         <EntityType Name="StockOnTrain">
           <Key>
@@ -156,6 +176,63 @@
             </Principal>
             <Dependent Role="StockOnTrain">
               <PropertyRef Name="SerialNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="DriverId" />
+          </Key>
+          <Property Type="Int32" Name="DriverId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Forename" Nullable="false" />
+          <Property Type="String" Name="Surname" Nullable="false" />
+          <NavigationProperty Name="Trains" Relationship="Model.DriverTrain" FromRole="Driver" ToRole="Train" />
+          <NavigationProperty Name="Trains1" Relationship="Model.DriverTrain1" FromRole="Driver" ToRole="Train" />
+        </EntityType>
+        <Association Name="DriverTrain">
+          <End Type="Model.Driver" Role="Driver" Multiplicity="1" />
+          <End Type="Model.Train" Role="Train" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="DriverId" />
+            </Principal>
+            <Dependent Role="Train">
+              <PropertyRef Name="Driver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DriverTrain1">
+          <End Type="Model.Driver" Role="Driver" Multiplicity="1" />
+          <End Type="Model.Train" Role="Train" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="DriverId" />
+            </Principal>
+            <Dependent Role="Train">
+              <PropertyRef Name="CoDriver" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Goods">
+          <Key>
+            <PropertyRef Name="GoodsId" />
+          </Key>
+          <Property Type="Int32" Name="GoodsId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Type" Nullable="false" />
+          <Property Type="String" Name="Quantity" Nullable="false" />
+          <Property Type="Decimal" Name="Weight" Nullable="false" />
+          <Property Type="Int32" Name="TrainId" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="Train" Relationship="Model.TrainGoods" FromRole="Goods" ToRole="Train" />
+        </EntityType>
+        <Association Name="TrainGoods">
+          <End Type="Model.Train" Role="Train" Multiplicity="1" />
+          <End Type="Model.Goods" Role="Goods" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="TrainId" />
+            </Principal>
+            <Dependent Role="Goods">
+              <PropertyRef Name="TrainId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

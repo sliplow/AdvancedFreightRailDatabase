@@ -30,5 +30,7 @@ namespace AdvancedFreightRailDatabase
         public DbSet<StockOnTrain> StockOnTrains { get; set; }
         public DbSet<Town> Towns { get; set; }
         public DbSet<RollingStock> RollingStocks { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Goods> Goods { get; set; }
     }
 }
