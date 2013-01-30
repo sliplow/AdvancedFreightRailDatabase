@@ -13,18 +13,23 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="StockTypes" EntityType="Model.StockType" />
+          <EntitySet Name="RollingStocks" EntityType="Model.RollingStock" />
           <EntitySet Name="Trains" EntityType="Model.Train" />
           <EntitySet Name="StockOnTrains" EntityType="Model.StockOnTrain" />
           <EntitySet Name="Towns" EntityType="Model.Town" />
           <EntitySet Name="Stocks" EntityType="Model.Stock" />
+          <AssociationSet Name="RollingStockStock" Association="Model.RollingStockStock">
+            <End Role="RollingStock" EntitySet="RollingStocks" />
+            <End Role="Stock" EntitySet="Stocks" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="StockType">
+        <EntityType Name="RollingStock">
           <Key>
-            <PropertyRef Name="StockTypeId" />
+            <PropertyRef Name="RollingStockId" />
           </Key>
-          <Property Type="Int32" Name="StockTypeId" Nullable="false" />
+          <Property Type="Int32" Name="RollingStockId" Nullable="false" />
           <Property Type="Int32" Name="NumberOwned" Nullable="false" />
+          <NavigationProperty Name="Stocks" Relationship="Model.RollingStockStock" FromRole="RollingStock" ToRole="Stock" />
         </EntityType>
         <EntityType Name="Train">
           <Key>
@@ -38,9 +43,9 @@
           </Key>
           <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <EntityType Name="Locomotive" BaseType="Model.StockType">
+        <EntityType Name="Locomotive" BaseType="Model.RollingStock">
           </EntityType>
-        <EntityType Name="FreightWagon" BaseType="Model.StockType">
+        <EntityType Name="FreightWagon" BaseType="Model.RollingStock">
           </EntityType>
         <EntityType Name="Town">
           <Key>
@@ -53,6 +58,22 @@
             <PropertyRef Name="SerialNumber" />
           </Key>
           <Property Type="Int32" Name="SerialNumber" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="RollingStockId" Nullable="false" />
+          <NavigationProperty Name="RollingStock" Relationship="Model.RollingStockStock" FromRole="Stock" ToRole="RollingStock" />
+        </EntityType>
+        <Association Name="RollingStockStock">
+          <End Type="Model.RollingStock" Role="RollingStock" Multiplicity="1" />
+          <End Type="Model.Stock" Role="Stock" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RollingStock">
+              <PropertyRef Name="RollingStockId" />
+            </Principal>
+            <Dependent Role="Stock">
+              <PropertyRef Name="RollingStockId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="LocomotiveStock" BaseType="Model.Stock">
           <Property Type="String" Name="Name" Nullable="true" />
         </EntityType>
       </Schema>
