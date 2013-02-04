@@ -20,7 +20,7 @@ namespace AdvancedFreightRailDatabase
         }
     
         public int SerialNumber { get; set; }
-        public int StockTypeId { get; set; }
+        public int StockTypeId_FK { get; set; }
     
         public virtual StockType StockType { get; set; }
         public virtual ICollection<StockOnTrain> StockOnTrain { get; set; }

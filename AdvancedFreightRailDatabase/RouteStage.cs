@@ -16,6 +16,7 @@ namespace AdvancedFreightRailDatabase
     {
         public int RouteId { get; set; }
         public int StageId { get; set; }
+        public int VisitSequence { get; set; }
     
         public virtual Route Route { get; set; }
         public virtual Stage Stage { get; set; }
