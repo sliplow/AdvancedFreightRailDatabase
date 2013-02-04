@@ -12,19 +12,17 @@ namespace AdvancedFreightRailDatabase
     using System;
     using System.Collections.Generic;
     
-    public partial class Driver
+    public partial class Route
     {
-        public Driver()
+        public Route()
         {
-            this.TrainsDriving = new HashSet<Train>();
-            this.TrainsCoDriving = new HashSet<Train>();
+            this.RouteStages = new HashSet<RouteStage>();
         }
     
-        public int DriverId { get; set; }
-        public string Forename { get; set; }
-        public string Surname { get; set; }
+        public string RouteId { get; set; }
+        public int TrainId { get; set; }
     
-        public virtual ICollection<Train> TrainsDriving { get; set; }
-        public virtual ICollection<Train> TrainsCoDriving { get; set; }
+        public virtual Train Train { get; set; }
+        public virtual ICollection<RouteStage> RouteStages { get; set; }
     }
 }

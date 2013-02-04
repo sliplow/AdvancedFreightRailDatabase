@@ -18,8 +18,12 @@ namespace AdvancedFreightRailDatabase
         public string Type { get; set; }
         public string Quantity { get; set; }
         public decimal Weight { get; set; }
+        public int CollectionFrom { get; set; }
+        public int DeliveryTo { get; set; }
         public int TrainId { get; set; }
     
         public virtual Train Train { get; set; }
+        public virtual Town CollectionTown { get; set; }
+        public virtual Town DeliveryTown { get; set; }
     }
 }
