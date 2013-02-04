@@ -18,7 +18,7 @@ namespace AdvancedFreightRailDatabase
         {
             this.GoodsCollected = new HashSet<Goods>();
             this.GoodsDelivered = new HashSet<Goods>();
-            this.Stages1 = new HashSet<Stage>();
+            this.StagesFrom = new HashSet<Stage>();
             this.StageTo = new HashSet<Stage>();
         }
     
@@ -27,7 +27,7 @@ namespace AdvancedFreightRailDatabase
     
         public virtual ICollection<Goods> GoodsCollected { get; set; }
         public virtual ICollection<Goods> GoodsDelivered { get; set; }
-        public virtual ICollection<Stage> Stages1 { get; set; }
+        public virtual ICollection<Stage> StagesFrom { get; set; }
         public virtual ICollection<Stage> StageTo { get; set; }
     }
 }

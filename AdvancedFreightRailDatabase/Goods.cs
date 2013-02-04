@@ -17,7 +17,7 @@ namespace AdvancedFreightRailDatabase
         public int GoodsId { get; set; }
         public string Type { get; set; }
         public string Quantity { get; set; }
-        public decimal Weight { get; set; }
+        public decimal UnitWeight { get; set; }
         public int CollectionFrom { get; set; }
         public int DeliveryTo { get; set; }
         public int TrainId { get; set; }

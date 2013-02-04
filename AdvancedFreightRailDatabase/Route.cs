@@ -19,7 +19,7 @@ namespace AdvancedFreightRailDatabase
             this.RouteStages = new HashSet<RouteStage>();
         }
     
-        public string RouteId { get; set; }
+        public int RouteId { get; set; }
         public int TrainId { get; set; }
     
         public virtual Train Train { get; set; }

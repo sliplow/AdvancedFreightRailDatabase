@@ -24,7 +24,7 @@ namespace AdvancedFreightRailDatabase
         public int To { get; set; }
     
         public virtual ICollection<RouteStage> RouteStages { get; set; }
-        public virtual Town Town1 { get; set; }
+        public virtual Town TownFrom { get; set; }
         public virtual Town TownTo { get; set; }
     }
 }
