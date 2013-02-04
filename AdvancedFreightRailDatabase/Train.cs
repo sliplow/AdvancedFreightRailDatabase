@@ -25,6 +25,7 @@ namespace AdvancedFreightRailDatabase
         public int DriverId_FK { get; set; }
         public int CoDriverId_FK { get; set; }
         public decimal GrossWeight { get; set; }
+        public string TotalLength { get; set; }
     
         public virtual ICollection<StockOnTrain> StockOnTrains { get; set; }
         public virtual Driver MainDriver { get; set; }

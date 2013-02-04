@@ -14,8 +14,8 @@ namespace AdvancedFreightRailDatabase
     
     public partial class RouteStage
     {
-        public int RouteId { get; set; }
-        public int StageId { get; set; }
+        public int RouteId_FK { get; set; }
+        public int StageId_FK { get; set; }
         public int VisitSequence { get; set; }
     
         public virtual Route Route { get; set; }

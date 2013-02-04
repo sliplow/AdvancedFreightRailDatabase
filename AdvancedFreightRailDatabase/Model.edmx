@@ -75,6 +75,15 @@
             <End Role="Town" EntitySet="Towns" />
             <End Role="Stage" EntitySet="Stages" />
           </AssociationSet>
+          <EntitySet Name="DriverQualifications" EntityType="Model.DriverQualification" />
+          <AssociationSet Name="Entity1Driver" Association="Model.Entity1Driver">
+            <End Role="Entity1" EntitySet="DriverQualifications" />
+            <End Role="Driver" EntitySet="Drivers" />
+          </AssociationSet>
+          <AssociationSet Name="LocomotiveEntity1" Association="Model.LocomotiveEntity1">
+            <End Role="Locomotive" EntitySet="StockTypes" />
+            <End Role="Entity1" EntitySet="DriverQualifications" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="StockType">
           <Key>
@@ -84,7 +93,7 @@
           <Property Type="String" Name="Class" Nullable="false" />
           <Property Type="Int32" Name="NumberOwned" Nullable="false" />
           <Property Type="Decimal" Name="Length" Nullable="false" />
-          <NavigationProperty Name="RollingStocks" Relationship="Model.StockTypeRollingStock" FromRole="StockType" ToRole="RollingStock" />
+          <NavigationProperty Name="StockTypeHas1orManyRollingStock" Relationship="Model.StockTypeRollingStock" FromRole="StockType" ToRole="RollingStock" />
         </EntityType>
         <EntityType Name="Train">
           <Key>
@@ -99,6 +108,7 @@
           <NavigationProperty Name="Routes" Relationship="Model.TrainRoute" FromRole="Train" ToRole="Route" />
           <NavigationProperty Name="Goods" Relationship="Model.TrainGoods" FromRole="Train" ToRole="Goods" />
           <Property Type="Decimal" Name="GrossWeight" Nullable="false" />
+          <Property Type="String" Name="TotalLength" Nullable="false" />
         </EntityType>
         <EntityType Name="StockOnTrain">
           <Key>
@@ -112,6 +122,7 @@
         </EntityType>
         <EntityType Name="Locomotive" BaseType="Model.StockType">
           <Property Type="Int32" Name="TowingWeight" Nullable="false" />
+          <NavigationProperty Name="LocomotiveHas1OrManyDrivers" Relationship="Model.LocomotiveEntity1" FromRole="Locomotive" ToRole="Entity1" />
         </EntityType>
         <EntityType Name="FreightWagon" BaseType="Model.StockType">
           <Property Type="Decimal" Name="TareWeight" Nullable="false" />
@@ -135,8 +146,8 @@
           </Key>
           <Property Type="Int32" Name="SerialNumber" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="Int32" Name="StockTypeId_FK" Nullable="false" />
-          <NavigationProperty Name="StockType" Relationship="Model.StockTypeRollingStock" FromRole="RollingStock" ToRole="StockType" />
-          <NavigationProperty Name="StockOnTrain" Relationship="Model.StockOnTrainRollingStock" FromRole="RollingStock" ToRole="StockOnTrain" />
+          <NavigationProperty Name="RollingStockOnlyHas1StockType" Relationship="Model.StockTypeRollingStock" FromRole="RollingStock" ToRole="StockType" />
+          <NavigationProperty Name="RollingStockHas1orManyStockOnTrain" Relationship="Model.StockOnTrainRollingStock" FromRole="RollingStock" ToRole="StockOnTrain" />
         </EntityType>
         <EntityType Name="LocomotiveStock" BaseType="Model.RollingStock">
           <Property Type="String" Name="Name" Nullable="true" />
@@ -186,6 +197,7 @@
           <Property Type="String" Name="Surname" Nullable="false" />
           <NavigationProperty Name="TrainsDriving" Relationship="Model.DriverTrain" FromRole="Driver" ToRole="Train" />
           <NavigationProperty Name="TrainsCoDriving" Relationship="Model.DriverTrain1" FromRole="Driver" ToRole="Train" />
+          <NavigationProperty Name="DriverHas1orManyQualifications" Relationship="Model.Entity1Driver" FromRole="Driver" ToRole="Entity1" />
         </EntityType>
         <Association Name="DriverTrain">
           <End Type="Model.Driver" Role="Driver" Multiplicity="1" />
@@ -243,7 +255,8 @@
             <PropertyRef Name="RouteId" />
           </Key>
           <Property Type="Int32" Name="RouteId" Nullable="false" />
-          <Property Type="Int32" Name="TrainId" Nullable="true" annotation:StoreGeneratedPattern="None" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
+          <Property Type="Int32" Name="TotalDistance" Nullable="false" />
+          <Property Type="Int32" Name="TrainId_FK" Nullable="true" annotation:StoreGeneratedPattern="None" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
           <NavigationProperty Name="Train" Relationship="Model.TrainRoute" FromRole="Route" ToRole="Train" />
           <NavigationProperty Name="RouteStages" Relationship="Model.RouteRouteStage" FromRole="Route" ToRole="RouteStage" />
         </EntityType>
@@ -254,17 +267,18 @@
           <Property Type="Int32" Name="StageId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="From_FK" Nullable="false" />
           <Property Type="Int32" Name="To_FK" Nullable="false" />
+          <Property Type="String" Name="Distance" Nullable="false" />
           <NavigationProperty Name="RouteStages" Relationship="Model.StageRouteStage" FromRole="Stage" ToRole="RouteStage" />
           <NavigationProperty Name="TownFrom" Relationship="Model.TownStage1" FromRole="Stage" ToRole="Town" />
           <NavigationProperty Name="TownTo" Relationship="Model.TownStage" FromRole="Stage" ToRole="Town" />
         </EntityType>
         <EntityType Name="RouteStage">
           <Key>
-            <PropertyRef Name="RouteId" />
-            <PropertyRef Name="StageId" />
+            <PropertyRef Name="RouteId_FK" />
+            <PropertyRef Name="StageId_FK" />
           </Key>
-          <Property Type="Int32" Name="RouteId" Nullable="false" annotation:StoreGeneratedPattern="None" />
-          <Property Type="Int32" Name="StageId" Nullable="false" />
+          <Property Type="Int32" Name="RouteId_FK" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="StageId_FK" Nullable="false" />
           <NavigationProperty Name="Route" Relationship="Model.RouteRouteStage" FromRole="RouteStage" ToRole="Route" />
           <NavigationProperty Name="Stage" Relationship="Model.StageRouteStage" FromRole="RouteStage" ToRole="Stage" />
           <Property Type="Int32" Name="VisitSequence" Nullable="false" />
@@ -293,7 +307,7 @@
               <PropertyRef Name="TrainId" />
             </Principal>
             <Dependent Role="Route">
-              <PropertyRef Name="TrainId" />
+              <PropertyRef Name="TrainId_FK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -305,7 +319,7 @@
               <PropertyRef Name="RouteId" />
             </Principal>
             <Dependent Role="RouteStage">
-              <PropertyRef Name="RouteId" />
+              <PropertyRef Name="RouteId_FK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -317,7 +331,7 @@
               <PropertyRef Name="StageId" />
             </Principal>
             <Dependent Role="RouteStage">
-              <PropertyRef Name="StageId" />
+              <PropertyRef Name="StageId_FK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -342,6 +356,40 @@
             </Principal>
             <Dependent Role="Stage">
               <PropertyRef Name="From_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DriverQualification">
+          <Key>
+            <PropertyRef Name="DriverId_FK" />
+            <PropertyRef Name="StockTypeId_FK" />
+          </Key>
+          <Property Type="Int32" Name="DriverId_FK" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="StockTypeId_FK" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <NavigationProperty Name="DriverQualificationOnlyHas1Driver" Relationship="Model.Entity1Driver" FromRole="Entity1" ToRole="Driver" />
+          <NavigationProperty Name="DriverQualificationOnlyHas1Locomotive" Relationship="Model.LocomotiveEntity1" FromRole="Entity1" ToRole="Locomotive" />
+        </EntityType>
+        <Association Name="Entity1Driver">
+          <End Type="Model.DriverQualification" Role="Entity1" Multiplicity="*" />
+          <End Type="Model.Driver" Role="Driver" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Driver">
+              <PropertyRef Name="DriverId" />
+            </Principal>
+            <Dependent Role="Entity1">
+              <PropertyRef Name="DriverId_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LocomotiveEntity1">
+          <End Type="Model.Locomotive" Role="Locomotive" Multiplicity="1" />
+          <End Type="Model.DriverQualification" Role="Entity1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locomotive">
+              <PropertyRef Name="StockTypeId" />
+            </Principal>
+            <Dependent Role="Entity1">
+              <PropertyRef Name="StockTypeId_FK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

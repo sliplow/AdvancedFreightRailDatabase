@@ -16,7 +16,7 @@ namespace AdvancedFreightRailDatabase
     {
         public StockType()
         {
-            this.RollingStocks = new HashSet<RollingStock>();
+            this.StockTypeHas1orManyRollingStock = new HashSet<RollingStock>();
         }
     
         public int StockTypeId { get; set; }
@@ -24,6 +24,6 @@ namespace AdvancedFreightRailDatabase
         public int NumberOwned { get; set; }
         public decimal Length { get; set; }
     
-        public virtual ICollection<RollingStock> RollingStocks { get; set; }
+        public virtual ICollection<RollingStock> StockTypeHas1orManyRollingStock { get; set; }
     }
 }

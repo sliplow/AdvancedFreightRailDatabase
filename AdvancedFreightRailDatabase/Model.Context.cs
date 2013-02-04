@@ -35,5 +35,6 @@ namespace AdvancedFreightRailDatabase
         public DbSet<Route> Routes { get; set; }
         public DbSet<Stage> Stages { get; set; }
         public DbSet<RouteStage> RouteStages { get; set; }
+        public DbSet<DriverQualification> DriverQualifications { get; set; }
     }
 }

@@ -22,6 +22,7 @@ namespace AdvancedFreightRailDatabase
         public int StageId { get; set; }
         public int From_FK { get; set; }
         public int To_FK { get; set; }
+        public string Distance { get; set; }
     
         public virtual ICollection<RouteStage> RouteStages { get; set; }
         public virtual Town TownFrom { get; set; }

@@ -18,6 +18,7 @@ namespace AdvancedFreightRailDatabase
         {
             this.TrainsDriving = new HashSet<Train>();
             this.TrainsCoDriving = new HashSet<Train>();
+            this.DriverHas1orManyQualifications = new HashSet<DriverQualification>();
         }
     
         public int DriverId { get; set; }
@@ -26,5 +27,6 @@ namespace AdvancedFreightRailDatabase
     
         public virtual ICollection<Train> TrainsDriving { get; set; }
         public virtual ICollection<Train> TrainsCoDriving { get; set; }
+        public virtual ICollection<DriverQualification> DriverHas1orManyQualifications { get; set; }
     }
 }

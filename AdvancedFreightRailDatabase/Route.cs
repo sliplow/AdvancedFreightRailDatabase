@@ -20,7 +20,8 @@ namespace AdvancedFreightRailDatabase
         }
     
         public int RouteId { get; set; }
-        public Nullable<int> TrainId { get; set; }
+        public int TotalDistance { get; set; }
+        public Nullable<int> TrainId_FK { get; set; }
     
         public virtual Train Train { get; set; }
         public virtual ICollection<RouteStage> RouteStages { get; set; }

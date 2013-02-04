@@ -49,6 +49,9 @@
     <Compile Include="Driver.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="DriverQualification.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="FreightWagon.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

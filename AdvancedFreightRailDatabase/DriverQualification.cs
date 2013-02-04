@@ -12,15 +12,12 @@ namespace AdvancedFreightRailDatabase
     using System;
     using System.Collections.Generic;
     
-    public partial class Locomotive : StockType
+    public partial class DriverQualification
     {
-        public Locomotive()
-        {
-            this.LocomotiveHas1OrManyDrivers = new HashSet<DriverQualification>();
-        }
+        public int DriverId_FK { get; set; }
+        public int StockTypeId_FK { get; set; }
     
-        public int TowingWeight { get; set; }
-    
-        public virtual ICollection<DriverQualification> LocomotiveHas1OrManyDrivers { get; set; }
+        public virtual Driver DriverQualificationOnlyHas1Driver { get; set; }
+        public virtual Locomotive DriverQualificationOnlyHas1Locomotive { get; set; }
     }
 }
