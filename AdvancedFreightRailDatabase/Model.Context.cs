@@ -31,10 +31,11 @@ namespace AdvancedFreightRailDatabase
         public DbSet<Town> Towns { get; set; }
         public DbSet<RollingStock> RollingStocks { get; set; }
         public DbSet<Driver> Drivers { get; set; }
-        public DbSet<Goods> Goods { get; set; }
+        public DbSet<Delivery> Deliveries { get; set; }
         public DbSet<Route> Routes { get; set; }
         public DbSet<Stage> Stages { get; set; }
         public DbSet<RouteStage> RouteStages { get; set; }
         public DbSet<DriverQualification> DriverQualifications { get; set; }
+        public DbSet<Goods> Goods { get; set; }
     }
 }

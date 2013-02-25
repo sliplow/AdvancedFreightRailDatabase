@@ -16,7 +16,7 @@ namespace AdvancedFreightRailDatabase
     {
         public Stage()
         {
-            this.RouteStages = new HashSet<RouteStage>();
+            this.AStageHas1OrManyRouteStages = new HashSet<RouteStage>();
         }
     
         public int StageId { get; set; }
@@ -24,8 +24,8 @@ namespace AdvancedFreightRailDatabase
         public int To_FK { get; set; }
         public string Distance { get; set; }
     
-        public virtual ICollection<RouteStage> RouteStages { get; set; }
-        public virtual Town TownFrom { get; set; }
-        public virtual Town TownTo { get; set; }
+        public virtual ICollection<RouteStage> AStageHas1OrManyRouteStages { get; set; }
+        public virtual Town AStageHasOnly1FromTown { get; set; }
+        public virtual Town AStageHasOnly1ToTown { get; set; }
     }
 }

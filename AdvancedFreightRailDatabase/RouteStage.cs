@@ -18,7 +18,7 @@ namespace AdvancedFreightRailDatabase
         public int StageId_FK { get; set; }
         public int VisitSequence { get; set; }
     
-        public virtual Route Route { get; set; }
-        public virtual Stage Stage { get; set; }
+        public virtual Route ARouteStageHasOnly1Route { get; set; }
+        public virtual Stage ARouteStageHasOnly1Stage { get; set; }
     }
 }

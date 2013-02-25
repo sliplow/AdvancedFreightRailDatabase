@@ -16,9 +16,8 @@ namespace AdvancedFreightRailDatabase
     {
         public Train()
         {
-            this.StockOnTrains = new HashSet<StockOnTrain>();
-            this.Routes = new HashSet<Route>();
-            this.Goods = new HashSet<Goods>();
+            this.ATrainMayContain1OrManyStockOnTrain = new HashSet<StockOnTrain>();
+            this.ATrainMayMake1OrManyDeliveries = new HashSet<Delivery>();
         }
     
         public int TrainId { get; set; }
@@ -26,11 +25,12 @@ namespace AdvancedFreightRailDatabase
         public int CoDriverId_FK { get; set; }
         public decimal GrossWeight { get; set; }
         public string TotalLength { get; set; }
+        public Nullable<int> RouteId_FK { get; set; }
     
-        public virtual ICollection<StockOnTrain> StockOnTrains { get; set; }
-        public virtual Driver MainDriver { get; set; }
-        public virtual Driver SecondaryDriver { get; set; }
-        public virtual ICollection<Route> Routes { get; set; }
-        public virtual ICollection<Goods> Goods { get; set; }
+        public virtual ICollection<StockOnTrain> ATrainMayContain1OrManyStockOnTrain { get; set; }
+        public virtual Driver ATrainIsDrivenByOnly1Driver { get; set; }
+        public virtual Driver ATrainIsDrivenByOnly1CoDriver { get; set; }
+        public virtual Route ATrainCouldDriveOnly1Route { get; set; }
+        public virtual ICollection<Delivery> ATrainMayMake1OrManyDeliveries { get; set; }
     }
 }

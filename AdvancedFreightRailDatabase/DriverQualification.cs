@@ -17,7 +17,7 @@ namespace AdvancedFreightRailDatabase
         public int DriverId_FK { get; set; }
         public int StockTypeId_FK { get; set; }
     
-        public virtual Driver DriverQualificationOnlyHas1Driver { get; set; }
-        public virtual Locomotive DriverQualificationOnlyHas1Locomotive { get; set; }
+        public virtual Driver ADriverQualificationHasOnly1Driver { get; set; }
+        public virtual Locomotive ADriverQualificationHasOnly1Locomotive { get; set; }
     }
 }

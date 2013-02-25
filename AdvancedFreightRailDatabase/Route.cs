@@ -16,14 +16,14 @@ namespace AdvancedFreightRailDatabase
     {
         public Route()
         {
-            this.RouteStages = new HashSet<RouteStage>();
+            this.ARouteCouldHaveManyTrainsOnIt = new HashSet<Train>();
+            this.ARouteHasManyRouteStages = new HashSet<RouteStage>();
         }
     
         public int RouteId { get; set; }
-        public int TotalDistance { get; set; }
-        public Nullable<int> TrainId_FK { get; set; }
+        public Nullable<int> TotalDistance { get; set; }
     
-        public virtual Train Train { get; set; }
-        public virtual ICollection<RouteStage> RouteStages { get; set; }
+        public virtual ICollection<Train> ARouteCouldHaveManyTrainsOnIt { get; set; }
+        public virtual ICollection<RouteStage> ARouteHasManyRouteStages { get; set; }
     }
 }

@@ -16,17 +16,17 @@ namespace AdvancedFreightRailDatabase
     {
         public Driver()
         {
-            this.TrainsDriving = new HashSet<Train>();
-            this.TrainsCoDriving = new HashSet<Train>();
-            this.DriverHas1orManyQualifications = new HashSet<DriverQualification>();
+            this.ADriverMayDriveManyTrains = new HashSet<Train>();
+            this.ADriverMayCoDriveManyTrains = new HashSet<Train>();
+            this.ADriverHas1orManyQualifications = new HashSet<DriverQualification>();
         }
     
         public int DriverId { get; set; }
         public string Forename { get; set; }
         public string Surname { get; set; }
     
-        public virtual ICollection<Train> TrainsDriving { get; set; }
-        public virtual ICollection<Train> TrainsCoDriving { get; set; }
-        public virtual ICollection<DriverQualification> DriverHas1orManyQualifications { get; set; }
+        public virtual ICollection<Train> ADriverMayDriveManyTrains { get; set; }
+        public virtual ICollection<Train> ADriverMayCoDriveManyTrains { get; set; }
+        public virtual ICollection<DriverQualification> ADriverHas1orManyQualifications { get; set; }
     }
 }

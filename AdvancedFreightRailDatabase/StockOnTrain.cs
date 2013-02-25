@@ -17,7 +17,7 @@ namespace AdvancedFreightRailDatabase
         public int SerialNumber_FK { get; set; }
         public int TrainId_FK { get; set; }
     
-        public virtual Train Train { get; set; }
-        public virtual RollingStock RollingStocks { get; set; }
+        public virtual RollingStock StockOnTrainHoldsOnly1RollingStock { get; set; }
+        public virtual Train StockOnTrainHoldsOnly1Train { get; set; }
     }
 }

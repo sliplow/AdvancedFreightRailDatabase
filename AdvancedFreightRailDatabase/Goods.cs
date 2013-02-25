@@ -14,16 +14,15 @@ namespace AdvancedFreightRailDatabase
     
     public partial class Goods
     {
+        public Goods()
+        {
+            this.AGoodMakes1OrManyDeliveries = new HashSet<Delivery>();
+        }
+    
         public int GoodsId { get; set; }
         public string Type { get; set; }
-        public string Quantity { get; set; }
         public decimal UnitWeight { get; set; }
-        public int CollectionFrom_FK { get; set; }
-        public int DeliveryTo_FK { get; set; }
-        public int TrainId_FK { get; set; }
     
-        public virtual Train Train { get; set; }
-        public virtual Town CollectionTown { get; set; }
-        public virtual Town DeliveryTown { get; set; }
+        public virtual ICollection<Delivery> AGoodMakes1OrManyDeliveries { get; set; }
     }
 }
