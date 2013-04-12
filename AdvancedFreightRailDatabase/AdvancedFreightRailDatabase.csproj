@@ -95,16 +95,19 @@
     <Compile Include="Stage.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Station.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="StockOnTrain.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="StockType.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Town.cs">
+    <Compile Include="Train.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Train.cs">
+    <Compile Include="TrainRoutes.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
   </ItemGroup>

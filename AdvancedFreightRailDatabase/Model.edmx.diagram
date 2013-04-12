@@ -14,14 +14,12 @@
         </InheritanceConnector>
         <InheritanceConnector EntityType="Model.Locomotive" ManuallyRouted="false" >
         </InheritanceConnector>
-        <EntityTypeShape EntityType="Model.Town" Width="2.625" PointX="13.25" PointY="9" />
+        <EntityTypeShape EntityType="Model.Station" Width="2.875" PointX="9.125" PointY="9.375" />
         <EntityTypeShape EntityType="Model.RollingStock" Width="3" PointX="5" PointY="0.5" />
         <InheritanceConnector EntityType="Model.Locomotive" />
         <InheritanceConnector EntityType="Model.FreightWagon" />
         <InheritanceConnector EntityType="Model.Locomotive" ManuallyRouted="false" >
         </InheritanceConnector>
-        <EntityTypeShape EntityType="Model.LocomotiveStock" Width="2.75" PointX="5.125" PointY="2.75" />
-        <InheritanceConnector EntityType="Model.LocomotiveStock" />
         <InheritanceConnector EntityType="Model.FreightWagon" ManuallyRouted="false" >
         </InheritanceConnector>
         <AssociationConnector Association="Model.TrainStockOnTrain" />
@@ -30,23 +28,27 @@
         <EntityTypeShape EntityType="Model.Driver" Width="2.75" PointX="5.125" PointY="4.375" IsExpanded="true" />
         <AssociationConnector Association="Model.DriverTrain" />
         <AssociationConnector Association="Model.DriverTrain1" />
-        <EntityTypeShape EntityType="Model.Delivery" Width="2.75" PointX="13.125" PointY="4.375" />
-        <EntityTypeShape EntityType="Model.Route" Width="2.75" PointX="5.125" PointY="6.625" />
-        <EntityTypeShape EntityType="Model.Stage" Width="2.875" PointX="9.125" PointY="9" />
-        <EntityTypeShape EntityType="Model.RouteStage" Width="2.75" PointX="5.125" PointY="9.375" />
+        <EntityTypeShape EntityType="Model.Delivery" Width="2.625" PointX="13.125" PointY="4.375" />
+        <EntityTypeShape EntityType="Model.Route" Width="2.875" PointX="0.5" PointY="6.75" />
+        <EntityTypeShape EntityType="Model.Stage" Width="2.75" PointX="5.125" PointY="9.375" />
+        <EntityTypeShape EntityType="Model.RouteStage" Width="2.875" PointX="0.5" PointY="9.375" />
         <AssociationConnector Association="Model.GoodsTown" ></AssociationConnector>
         <AssociationConnector Association="Model.GoodsTown1" />
-        <AssociationConnector Association="Model.TrainRoute" />
         <AssociationConnector Association="Model.RouteRouteStage" />
         <AssociationConnector Association="Model.StageRouteStage" />
         <AssociationConnector Association="Model.TownStage" />
         <AssociationConnector Association="Model.TownStage1" />
-        <EntityTypeShape EntityType="Model.DriverQualification" Width="2.875" PointX="0.5" PointY="5" />
+        <EntityTypeShape EntityType="Model.DriverQualification" Width="2.875" PointX="0.5" PointY="4.75" />
         <AssociationConnector Association="Model.Entity1Driver" />
         <AssociationConnector Association="Model.LocomotiveEntity1" />
-        <EntityTypeShape EntityType="Model.Goods" Width="2.75" PointX="13.125" PointY="0.5" />
+        <EntityTypeShape EntityType="Model.Goods" Width="2.625" PointX="13.125" PointY="0.5" />
         <AssociationConnector Association="Model.GoodsDelivery" />
         <AssociationConnector Association="Model.TrainDelivery" />
+        <EntityTypeShape EntityType="Model.TrainRoutes" Width="2.75" PointX="5.125" PointY="6.75" />
+        <AssociationConnector Association="Model.TrainTrainRoutes" />
+        <AssociationConnector Association="Model.RouteTrainRoutes" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="Model.TrainStation" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

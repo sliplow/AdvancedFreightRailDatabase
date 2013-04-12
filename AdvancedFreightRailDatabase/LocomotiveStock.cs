@@ -14,6 +14,5 @@ namespace AdvancedFreightRailDatabase
     
     public partial class LocomotiveStock : RollingStock
     {
-        public string Name { get; set; }
     }
 }

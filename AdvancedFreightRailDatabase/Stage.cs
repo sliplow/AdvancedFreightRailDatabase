@@ -25,7 +25,7 @@ namespace AdvancedFreightRailDatabase
         public string Distance { get; set; }
     
         public virtual ICollection<RouteStage> AStageHas1OrManyRouteStages { get; set; }
-        public virtual Town AStageHasOnly1FromTown { get; set; }
-        public virtual Town AStageHasOnly1ToTown { get; set; }
+        public virtual Station AStageHasOnly1FromTown { get; set; }
+        public virtual Station AStageHasOnly1ToTown { get; set; }
     }
 }

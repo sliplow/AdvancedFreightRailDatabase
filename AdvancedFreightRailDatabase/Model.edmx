@@ -16,7 +16,7 @@
           <EntitySet Name="StockTypes" EntityType="Model.StockType" />
           <EntitySet Name="Trains" EntityType="Model.Train" />
           <EntitySet Name="StockOnTrains" EntityType="Model.StockOnTrain" />
-          <EntitySet Name="Towns" EntityType="Model.Town" />
+          <EntitySet Name="Stations" EntityType="Model.Station" />
           <EntitySet Name="RollingStocks" EntityType="Model.RollingStock" />
           <AssociationSet Name="TrainStockOnTrain" Association="Model.TrainStockOnTrain">
             <End Role="Train" EntitySet="Trains" />
@@ -45,15 +45,11 @@
           <EntitySet Name="RouteStages" EntityType="Model.RouteStage" />
           <AssociationSet Name="GoodsTown" Association="Model.GoodsTown">
             <End Role="Goods" EntitySet="Deliveries" />
-            <End Role="Town" EntitySet="Towns" />
+            <End Role="Town" EntitySet="Stations" />
           </AssociationSet>
           <AssociationSet Name="GoodsTown1" Association="Model.GoodsTown1">
             <End Role="Goods" EntitySet="Deliveries" />
-            <End Role="Town" EntitySet="Towns" />
-          </AssociationSet>
-          <AssociationSet Name="TrainRoute" Association="Model.TrainRoute">
-            <End Role="Train" EntitySet="Trains" />
-            <End Role="Route" EntitySet="Routes" />
+            <End Role="Town" EntitySet="Stations" />
           </AssociationSet>
           <AssociationSet Name="RouteRouteStage" Association="Model.RouteRouteStage">
             <End Role="Route" EntitySet="Routes" />
@@ -64,11 +60,11 @@
             <End Role="RouteStage" EntitySet="RouteStages" />
           </AssociationSet>
           <AssociationSet Name="TownStage" Association="Model.TownStage">
-            <End Role="Town" EntitySet="Towns" />
+            <End Role="Town" EntitySet="Stations" />
             <End Role="Stage" EntitySet="Stages" />
           </AssociationSet>
           <AssociationSet Name="TownStage1" Association="Model.TownStage1">
-            <End Role="Town" EntitySet="Towns" />
+            <End Role="Town" EntitySet="Stations" />
             <End Role="Stage" EntitySet="Stages" />
           </AssociationSet>
           <EntitySet Name="DriverQualifications" EntityType="Model.DriverQualification" />
@@ -88,6 +84,19 @@
           <AssociationSet Name="TrainDelivery" Association="Model.TrainDelivery">
             <End Role="Train" EntitySet="Trains" />
             <End Role="Delivery" EntitySet="Deliveries" />
+          </AssociationSet>
+          <EntitySet Name="TrainRoutes" EntityType="Model.TrainRoutes" />
+          <AssociationSet Name="TrainTrainRoutes" Association="Model.TrainTrainRoutes">
+            <End Role="Train" EntitySet="Trains" />
+            <End Role="TrainRoutes" EntitySet="TrainRoutes" />
+          </AssociationSet>
+          <AssociationSet Name="RouteTrainRoutes" Association="Model.RouteTrainRoutes">
+            <End Role="Route" EntitySet="Routes" />
+            <End Role="TrainRoutes" EntitySet="TrainRoutes" />
+          </AssociationSet>
+          <AssociationSet Name="TrainStation" Association="Model.TrainStation">
+            <End Role="Train" EntitySet="Trains" />
+            <End Role="Station" EntitySet="Stations" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="StockType">
@@ -110,11 +119,12 @@
           <Property Type="Int32" Name="CoDriverId_FK" Nullable="false" />
           <NavigationProperty Name="ATrainIsDrivenByOnly1Driver" Relationship="Model.DriverTrain" FromRole="Train" ToRole="Driver" />
           <NavigationProperty Name="ATrainIsDrivenByOnly1CoDriver" Relationship="Model.DriverTrain1" FromRole="Train" ToRole="Driver" />
-          <NavigationProperty Name="ATrainCouldDriveOnly1Route" Relationship="Model.TrainRoute" FromRole="Train" ToRole="Route" />
           <Property Type="Decimal" Name="GrossWeight" Nullable="false" />
           <Property Type="String" Name="TotalLength" Nullable="false" />
-          <Property Type="Int32" Name="RouteId_FK" Nullable="true" annotation:StoreGeneratedPattern="None" />
           <NavigationProperty Name="ATrainMayMake1OrManyDeliveries" Relationship="Model.TrainDelivery" FromRole="Train" ToRole="Delivery" />
+          <NavigationProperty Name="ATrainCouldBeOnManyTrainRoutes" Relationship="Model.TrainTrainRoutes" FromRole="Train" ToRole="TrainRoutes" />
+          <Property Type="Int32" Name="CurrentStop_FK" Nullable="true" />
+          <NavigationProperty Name="ATrainCouldBeAtAStation" Relationship="Model.TrainStation" FromRole="Train" ToRole="Station" />
         </EntityType>
         <EntityType Name="StockOnTrain">
           <Key>
@@ -135,16 +145,17 @@
           <Property Type="String" Name="Description" Nullable="false" />
           <Property Type="Decimal" Name="MaxPayload" Nullable="false" />
         </EntityType>
-        <EntityType Name="Town">
+        <EntityType Name="Station">
           <Key>
-            <PropertyRef Name="TownId" />
+            <PropertyRef Name="StationId" />
           </Key>
-          <Property Type="Int32" Name="TownId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="StationId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" />
-          <NavigationProperty Name="GoodsCollected" Relationship="Model.GoodsTown" FromRole="Town" ToRole="Goods" />
-          <NavigationProperty Name="GoodsDelivered" Relationship="Model.GoodsTown1" FromRole="Town" ToRole="Goods" />
-          <NavigationProperty Name="StagesFrom" Relationship="Model.TownStage1" FromRole="Town" ToRole="Stage" />
-          <NavigationProperty Name="StageTo" Relationship="Model.TownStage" FromRole="Town" ToRole="Stage" />
+          <NavigationProperty Name="AStationHas1OrManyDeliveriesToBeCollected" Relationship="Model.GoodsTown" FromRole="Town" ToRole="Goods" />
+          <NavigationProperty Name="AStationHas1OrManyGoodsDeliveredToIt" Relationship="Model.GoodsTown1" FromRole="Town" ToRole="Goods" />
+          <NavigationProperty Name="AStationHas1OrManyStagesFromIt" Relationship="Model.TownStage1" FromRole="Town" ToRole="Stage" />
+          <NavigationProperty Name="AStationHas1OrManyStagesToIt" Relationship="Model.TownStage" FromRole="Town" ToRole="Stage" />
+          <NavigationProperty Name="AStationCouldHaveManyTrains" Relationship="Model.TrainStation" FromRole="Station" ToRole="Train" />
         </EntityType>
         <EntityType Name="RollingStock">
           <Key>
@@ -152,11 +163,11 @@
           </Key>
           <Property Type="Int32" Name="SerialNumber" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="Int32" Name="StockTypeId_FK" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" />
           <NavigationProperty Name="RollingStockOnlyHas1StockType" Relationship="Model.StockTypeRollingStock" FromRole="RollingStock" ToRole="StockType" />
           <NavigationProperty Name="RollingStockStoredIn1orManyStockOnTrain" Relationship="Model.StockOnTrainRollingStock" FromRole="RollingStock" ToRole="StockOnTrain" />
         </EntityType>
         <EntityType Name="LocomotiveStock" BaseType="Model.RollingStock">
-          <Property Type="String" Name="Name" Nullable="true" />
         </EntityType>
         <Association Name="TrainStockOnTrain">
           <End Type="Model.Train" Role="Train" Multiplicity="1" />
@@ -239,10 +250,10 @@
           <Property Type="String" Name="Quantity" Nullable="false" />
           <Property Type="Int32" Name="CollectionFrom_FK" Nullable="false" />
           <Property Type="Int32" Name="DeliveryTo_FK" Nullable="false" />
-          <NavigationProperty Name="CollectionTown" Relationship="Model.GoodsTown" FromRole="Goods" ToRole="Town" />
-          <NavigationProperty Name="DeliveryTown" Relationship="Model.GoodsTown1" FromRole="Goods" ToRole="Town" />
-          <NavigationProperty Name="Good" Relationship="Model.GoodsDelivery" FromRole="Delivery" ToRole="Goods" />
-          <NavigationProperty Name="Train" Relationship="Model.TrainDelivery" FromRole="Delivery" ToRole="Train" />
+          <NavigationProperty Name="DeliveryHasOnly1CollectionTown" Relationship="Model.GoodsTown" FromRole="Goods" ToRole="Town" />
+          <NavigationProperty Name="DeliveryHasOnly1DeliveryTown" Relationship="Model.GoodsTown1" FromRole="Goods" ToRole="Town" />
+          <NavigationProperty Name="DeliveryHasOnly1Good" Relationship="Model.GoodsDelivery" FromRole="Delivery" ToRole="Goods" />
+          <NavigationProperty Name="ADeliveryIsOnOnly1Train" Relationship="Model.TrainDelivery" FromRole="Delivery" ToRole="Train" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -250,8 +261,8 @@
           </Key>
           <Property Type="Int32" Name="RouteId" Nullable="false" />
           <Property Type="Int32" Name="TotalDistance" Nullable="true" />
-          <NavigationProperty Name="ARouteCouldHaveManyTrainsOnIt" Relationship="Model.TrainRoute" FromRole="Route" ToRole="Train" />
           <NavigationProperty Name="ARouteHasManyRouteStages" Relationship="Model.RouteRouteStage" FromRole="Route" ToRole="RouteStage" />
+          <NavigationProperty Name="ARouteCouldHaveManyTrainRoutesOnIt" Relationship="Model.RouteTrainRoutes" FromRole="Route" ToRole="TrainRoutes" />
         </EntityType>
         <EntityType Name="Stage">
           <Key>
@@ -278,10 +289,10 @@
         </EntityType>
         <Association Name="GoodsTown">
           <End Type="Model.Delivery" Role="Goods" Multiplicity="*" />
-          <End Type="Model.Town" Role="Town" Multiplicity="1" />
+          <End Type="Model.Station" Role="Town" Multiplicity="1" />
           <ReferentialConstraint>
             <Principal Role="Town">
-              <PropertyRef Name="TownId" />
+              <PropertyRef Name="StationId" />
             </Principal>
             <Dependent Role="Goods">
               <PropertyRef Name="CollectionFrom_FK" />
@@ -290,17 +301,13 @@
         </Association>
         <Association Name="GoodsTown1">
           <End Type="Model.Delivery" Role="Goods" Multiplicity="*" />
-          <End Type="Model.Town" Role="Town" Multiplicity="1" />
-        </Association>
-        <Association Name="TrainRoute">
-          <End Type="Model.Train" Role="Train" Multiplicity="*" />
-          <End Type="Model.Route" Role="Route" Multiplicity="0..1" />
+          <End Type="Model.Station" Role="Town" Multiplicity="1" />
           <ReferentialConstraint>
-            <Principal Role="Route">
-              <PropertyRef Name="RouteId" />
+            <Principal Role="Town">
+              <PropertyRef Name="StationId" />
             </Principal>
-            <Dependent Role="Train">
-              <PropertyRef Name="RouteId_FK" />
+            <Dependent Role="Goods">
+              <PropertyRef Name="DeliveryTo_FK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -329,11 +336,11 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="TownStage">
-          <End Type="Model.Town" Role="Town" Multiplicity="1" />
+          <End Type="Model.Station" Role="Town" Multiplicity="1" />
           <End Type="Model.Stage" Role="Stage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Town">
-              <PropertyRef Name="TownId" />
+              <PropertyRef Name="StationId" />
             </Principal>
             <Dependent Role="Stage">
               <PropertyRef Name="To_FK" />
@@ -341,11 +348,11 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="TownStage1">
-          <End Type="Model.Town" Role="Town" Multiplicity="1" />
+          <End Type="Model.Station" Role="Town" Multiplicity="1" />
           <End Type="Model.Stage" Role="Stage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Town">
-              <PropertyRef Name="TownId" />
+              <PropertyRef Name="StationId" />
             </Principal>
             <Dependent Role="Stage">
               <PropertyRef Name="From_FK" />
@@ -416,6 +423,54 @@
             </Principal>
             <Dependent Role="Delivery">
               <PropertyRef Name="TrainId_FK" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TrainRoutes">
+          <Key>
+            <PropertyRef Name="TrainRouteId" />
+          </Key>
+          <Property Type="Int32" Name="TrainRouteId" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
+          <Property Type="Int32" Name="TrainId" Nullable="false" annotation:StoreGeneratedPattern="None" />
+          <Property Type="Int32" Name="RouteId" Nullable="false" />
+          <NavigationProperty Name="EachTrainRouteHasOnly1RouteOnIt" Relationship="Model.TrainTrainRoutes" FromRole="TrainRoutes" ToRole="Train" />
+          <NavigationProperty Name="EachTrainRouteHasOnly1TrainOnIt" Relationship="Model.RouteTrainRoutes" FromRole="TrainRoutes" ToRole="Route" />
+          <Property Type="DateTime" Name="StartDateTime" Nullable="false" />
+          <Property Type="DateTime" Name="EndDateTime" Nullable="true" />
+        </EntityType>
+        <Association Name="TrainTrainRoutes">
+          <End Type="Model.Train" Role="Train" Multiplicity="1" />
+          <End Type="Model.TrainRoutes" Role="TrainRoutes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Train">
+              <PropertyRef Name="TrainId" />
+            </Principal>
+            <Dependent Role="TrainRoutes">
+              <PropertyRef Name="TrainId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RouteTrainRoutes">
+          <End Type="Model.Route" Role="Route" Multiplicity="1" />
+          <End Type="Model.TrainRoutes" Role="TrainRoutes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Route">
+              <PropertyRef Name="RouteId" />
+            </Principal>
+            <Dependent Role="TrainRoutes">
+              <PropertyRef Name="RouteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TrainStation">
+          <End Type="Model.Train" Role="Train" Multiplicity="*" />
+          <End Type="Model.Station" Role="Station" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="StationId" />
+            </Principal>
+            <Dependent Role="Train">
+              <PropertyRef Name="CurrentStop_FK" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

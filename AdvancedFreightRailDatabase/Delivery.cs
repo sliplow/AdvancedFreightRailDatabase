@@ -20,9 +20,9 @@ namespace AdvancedFreightRailDatabase
         public int CollectionFrom_FK { get; set; }
         public int DeliveryTo_FK { get; set; }
     
-        public virtual Town CollectionTown { get; set; }
-        public virtual Town DeliveryTown { get; set; }
-        public virtual Goods Good { get; set; }
-        public virtual Train Train { get; set; }
+        public virtual Station DeliveryHasOnly1CollectionTown { get; set; }
+        public virtual Station DeliveryHasOnly1DeliveryTown { get; set; }
+        public virtual Goods DeliveryHasOnly1Good { get; set; }
+        public virtual Train ADeliveryIsOnOnly1Train { get; set; }
     }
 }
