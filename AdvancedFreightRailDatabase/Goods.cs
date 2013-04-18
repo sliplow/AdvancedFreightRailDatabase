@@ -16,13 +16,13 @@ namespace AdvancedFreightRailDatabase
     {
         public Goods()
         {
-            this.AGoodMakes1OrManyDeliveries = new HashSet<Delivery>();
+            this.AGoodMayBeOn1OrManyDeliveries = new HashSet<Delivery>();
         }
     
         public int GoodsId { get; set; }
         public string Type { get; set; }
         public decimal UnitWeight { get; set; }
     
-        public virtual ICollection<Delivery> AGoodMakes1OrManyDeliveries { get; set; }
+        public virtual ICollection<Delivery> AGoodMayBeOn1OrManyDeliveries { get; set; }
     }
 }

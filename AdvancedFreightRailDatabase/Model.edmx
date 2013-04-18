@@ -400,7 +400,7 @@
           <Property Type="Int32" Name="GoodsId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Type" Nullable="false" />
           <Property Type="Decimal" Name="UnitWeight" Nullable="false" />
-          <NavigationProperty Name="AGoodMakes1OrManyDeliveries" Relationship="Model.GoodsDelivery" FromRole="Goods" ToRole="Delivery" />
+          <NavigationProperty Name="AGoodMayBeOn1OrManyDeliveries" Relationship="Model.GoodsDelivery" FromRole="Goods" ToRole="Delivery" />
         </EntityType>
         <Association Name="GoodsDelivery">
           <End Type="Model.Goods" Role="Goods" Multiplicity="1" />

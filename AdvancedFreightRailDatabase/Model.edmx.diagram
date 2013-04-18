@@ -14,7 +14,7 @@
         </InheritanceConnector>
         <InheritanceConnector EntityType="Model.Locomotive" ManuallyRouted="false" >
         </InheritanceConnector>
-        <EntityTypeShape EntityType="Model.Station" Width="2.875" PointX="9.125" PointY="9.375" />
+        <EntityTypeShape EntityType="Model.Station" Width="3.125" PointX="9" PointY="9.375" />
         <EntityTypeShape EntityType="Model.RollingStock" Width="3" PointX="5" PointY="0.5" />
         <InheritanceConnector EntityType="Model.Locomotive" />
         <InheritanceConnector EntityType="Model.FreightWagon" />
