@@ -120,7 +120,7 @@
           <NavigationProperty Name="ATrainIsDrivenByOnly1Driver" Relationship="Model.DriverTrain" FromRole="Train" ToRole="Driver" />
           <NavigationProperty Name="ATrainIsDrivenByOnly1CoDriver" Relationship="Model.DriverTrain1" FromRole="Train" ToRole="Driver" />
           <Property Type="Decimal" Name="GrossWeight" Nullable="false" />
-          <Property Type="String" Name="TotalLength" Nullable="false" />
+          <Property Type="Int32" Name="TotalLength" Nullable="false" />
           <NavigationProperty Name="ATrainMayMake1OrManyDeliveries" Relationship="Model.TrainDelivery" FromRole="Train" ToRole="Delivery" />
           <NavigationProperty Name="ATrainCouldBeOnManyTrainRoutes" Relationship="Model.TrainTrainRoutes" FromRole="Train" ToRole="TrainRoutes" />
           <Property Type="Int32" Name="CurrentStop_FK" Nullable="true" />
@@ -165,7 +165,7 @@
           <Property Type="Int32" Name="StockTypeId_FK" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="true" />
           <NavigationProperty Name="RollingStockOnlyHas1StockType" Relationship="Model.StockTypeRollingStock" FromRole="RollingStock" ToRole="StockType" />
-          <NavigationProperty Name="RollingStockStoredIn1orManyStockOnTrain" Relationship="Model.StockOnTrainRollingStock" FromRole="RollingStock" ToRole="StockOnTrain" />
+          <NavigationProperty Name="RollingStockMayBeStoredIn1orManyStockOnTrain" Relationship="Model.StockOnTrainRollingStock" FromRole="RollingStock" ToRole="StockOnTrain" />
         </EntityType>
         <EntityType Name="LocomotiveStock" BaseType="Model.RollingStock">
         </EntityType>
@@ -195,7 +195,7 @@
         </Association>
         <Association Name="StockOnTrainRollingStock">
           <End Type="Model.StockOnTrain" Role="StockOnTrain" Multiplicity="*" />
-          <End Type="Model.RollingStock" Role="RollingStock" Multiplicity="1" />
+          <End Type="Model.RollingStock" Role="RollingStock" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="RollingStock">
               <PropertyRef Name="SerialNumber" />
@@ -271,10 +271,10 @@
           <Property Type="Int32" Name="StageId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="From_FK" Nullable="false" />
           <Property Type="Int32" Name="To_FK" Nullable="false" />
-          <Property Type="String" Name="Distance" Nullable="true" />
+          <Property Type="Int32" Name="Distance" Nullable="true" />
           <NavigationProperty Name="AStageHas1OrManyRouteStages" Relationship="Model.StageRouteStage" FromRole="Stage" ToRole="RouteStage" />
-          <NavigationProperty Name="AStageHasOnly1FromTown" Relationship="Model.TownStage1" FromRole="Stage" ToRole="Town" />
-          <NavigationProperty Name="AStageHasOnly1ToTown" Relationship="Model.TownStage" FromRole="Stage" ToRole="Town" />
+          <NavigationProperty Name="AStageHasOnly1FromStation" Relationship="Model.TownStage1" FromRole="Stage" ToRole="Town" />
+          <NavigationProperty Name="AStageHasOnly1ToStation" Relationship="Model.TownStage" FromRole="Stage" ToRole="Town" />
         </EntityType>
         <EntityType Name="RouteStage">
           <Key>
@@ -433,8 +433,8 @@
           <Property Type="Int32" Name="TrainRouteId" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
           <Property Type="Int32" Name="TrainId" Nullable="false" annotation:StoreGeneratedPattern="None" />
           <Property Type="Int32" Name="RouteId" Nullable="false" />
-          <NavigationProperty Name="EachTrainRouteHasOnly1RouteOnIt" Relationship="Model.TrainTrainRoutes" FromRole="TrainRoutes" ToRole="Train" />
-          <NavigationProperty Name="EachTrainRouteHasOnly1TrainOnIt" Relationship="Model.RouteTrainRoutes" FromRole="TrainRoutes" ToRole="Route" />
+          <NavigationProperty Name="EachTrainRouteHasOnly1TrainOnIt" Relationship="Model.TrainTrainRoutes" FromRole="TrainRoutes" ToRole="Train" />
+          <NavigationProperty Name="EachTrainRouteHasOnly1RouteOnIt" Relationship="Model.RouteTrainRoutes" FromRole="TrainRoutes" ToRole="Route" />
           <Property Type="DateTime" Name="StartDateTime" Nullable="false" />
           <Property Type="DateTime" Name="EndDateTime" Nullable="true" />
         </EntityType>
